@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@finos/perspective';
+import { Table,TableData } from '@finos/perspective';
 import { ServerRespond } from './DataStreamer';
 import { DataManipulator } from './DataManipulator';
 import './Graph.css';
@@ -23,9 +23,9 @@ class Graph extends Component<IProps, {}> {
     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
 
     const schema = {
-      stock: 'string',
-      top_ask_price: 'float',
-      top_bid_price: 'float',
+      price_abc: 'float',
+      price_def: 'float',
+      ratio: 'float',
       timestamp: 'date',
       upper_bound:'float',
       lower_bound:'float',
@@ -39,9 +39,8 @@ class Graph extends Component<IProps, {}> {
       // Load the `table` in the `<perspective-viewer>` DOM reference.
       elem.load(this.table);
       elem.setAttribute('view', 'y_line');
-      elem.setAttribute('column-pivots', '["stock"]');
       elem.setAttribute('row-pivots', '["timestamp"]');
-      elem.setAttribute('columns', '["ratio","lower_bound","trigger_alert"]');
+      elem.setAttribute('columns', '["ratio","lower_bound","upper_bound","trigger_alert"]');
       elem.setAttribute('aggregates', JSON.stringify({
         price_abc:'avg',
         price_def:'avg',
